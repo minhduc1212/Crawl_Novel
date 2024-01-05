@@ -21,19 +21,18 @@ def search_data():
     if connection is not None:
         cursor = connection.cursor()
         search_query = search_entry.get()
-        query = f"SELECT * FROM chivi_full WHERE novel_name LIKE '%{search_query}%' OR novel_author LIKE '%{search_query}%'"
+        query = f"SELECT id, novel_name, novel_author FROM chivi_full WHERE novel_name LIKE '%{search_query}%' OR novel_author LIKE '%{search_query}%'"
         cursor.execute(query)
         result = cursor.fetchall()
         display_data(result)
         connection.close()
 
-def display_data(data):
+def display_data(result):
     # Xóa tất cả các cột và dòng cũ trước khi cập nhật
     for i in result_tree.get_children():
         result_tree.delete(i)
 
-    # Thêm dữ liệu mới
-    for row in data:
+    for row in result:
         result_tree.insert("", tk.END, values=row)
 
 def add_data():
@@ -52,13 +51,6 @@ def add_data():
         except mysql.connector.Error as e:
             messagebox.showerror("Lỗi", f"Lỗi thêm dữ liệu: {str(e)}")
         connection.close()
-def sort_treeview(tree, col, reverse):
-    """Sort the data in the Treeview widget based on the column clicked by the user."""
-    data = [(tree.set(child, col), child) for child in tree.get_children('')]
-    data.sort(reverse=reverse)
-    for index, (val, child) in enumerate(data):
-        tree.move(child, '', index)
-    tree.heading(col, command=lambda: sort_treeview(tree, col, not reverse))
 
 def update_data():
     connection = connect_to_database()
@@ -77,6 +69,14 @@ def update_data():
         except mysql.connector.Error as e:
             messagebox.showerror("Lỗi", f"Lỗi cập nhật dữ liệu: {str(e)}")
         connection.close()
+'''
+def sort_treeview(tree, col, reverse):
+    """Sort the data in the Treeview widget based on the column clicked by the user."""
+    data = [(tree.set(child, col), child) for child in tree.get_children('')]
+    data.sort(reverse=reverse)
+    for index, (val, child) in enumerate(data):
+        tree.move(child, '', index)
+    tree.heading(col, command=lambda: sort_treeview(tree, col, not reverse))
 
 def on_configure(event, tree):
     """Resize the columns of the Treeview widget based on the size of the window."""
@@ -90,6 +90,17 @@ def on_configure(event, tree):
         # expand the last column to fill the remaining space
         last_col = tree["columns"][-1]
         tree.column(last_col, width=window_width - tree_width)
+'''
+def copy_selected_text():
+    selected_items = result_tree.selection()
+    if selected_items:
+        copied_text = ""
+        for item in selected_items:
+            values = result_tree.item(item, "values")
+            text = "\t".join(values) + "\n"
+            copied_text += text
+        window.clipboard_clear()
+        window.clipboard_append(copied_text)
 
 # Tạo cửa sổ
 window = tk.Tk()
@@ -125,6 +136,9 @@ author_entry.grid(row=1, column=4, padx=10, pady=5, sticky='ew')
 add_button = tk.Button(window, text="Thêm", command=add_data)
 add_button.grid(row=1, column=5, padx=10, pady=5, sticky='w')
 
+copy_button = tk.Button(window, text="Copy", command=copy_selected_text)
+copy_button.grid(row=4, column=0, padx=10, pady=5, sticky='w')
+
 update_label = tk.Label(window, text="Cập nhật dữ liệu:")
 update_label.grid(row=2, column=0, padx=10, pady=5, sticky='w')
 id_label = tk.Label(window, text="ID:")
@@ -142,24 +156,35 @@ update_author_entry.grid(row=2, column=6, padx=10, pady=5, sticky='ew')
 update_button = tk.Button(window, text="Cập nhật", command=update_data)
 update_button.grid(row=2, column=7, padx=10, pady=5, sticky='w')
 
-# Tạo Treeview cho hiển thị dữ liệu
+"""# Tạo Treeview cho hiển thị dữ liệu
 columns = ("ID", "Tên", "Tác giả")
-result_tree = ttk.Treeview(window, columns=columns, show="headings", selectmode="browse")
+result_tree = ttk.Treeview(window, columns=columns, show="headings", selectmode="browse")"""
 
+result_tree = ttk.Treeview(window, columns=("ID", "Tên", "Tác giả"), show="headings", selectmode="browse")
+
+"""
 # Thiết lập cột và binding cho việc sắp xếp
 for col in columns:
     result_tree.heading(col, text=col, command=lambda c=col: sort_treeview(result_tree, c, False))
     result_tree.column(col, width=100, anchor="center")
-    
+"""
 result_tree.grid(row=3, column=0, columnspan=8, padx=10, pady=5, sticky='nsew')
+result_tree.heading("ID", text="ID")
+result_tree.heading("Tên", text="Tên")
+result_tree.heading("Tác giả", text="Tác giả")
+
+result_tree.column("ID", anchor="center")
+result_tree.column("Tên", anchor="center")
+result_tree.column("Tác giả", anchor="center")
 
 # Thiết lập scrollbar cho Treeview
 tree_scroll = ttk.Scrollbar(window, orient="vertical", command=result_tree.yview)
 tree_scroll.grid(row=3, column=8, sticky="ns")
 result_tree.configure(yscrollcommand=tree_scroll.set)
 
+"""
 # Binding cho việc cập nhật kích thước cột khi thay đổi kích thước cửa sổ
 window.bind("<Configure>", lambda event, tree=result_tree: on_configure(event, tree))
-
+"""
 # Mở cửa sổ
 window.mainloop()

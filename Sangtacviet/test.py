@@ -10,7 +10,7 @@ from selenium.webdriver.chrome.options import Options
 service = Service(executable_path='C:/Users/minhd/Downloads/Compressed/chromedriver-win64/chromedriver.exe')
 chrome_options = Options()
 chrome_options.add_argument("--headless=new")
-
+    
 def change_tab(window_handles):
     for window_id in window_handles:
         if window_id != current_window_id:
