@@ -1,3 +1,13 @@
+// ==UserScript==
+// @name         Token Fetcher
+// @namespace    http://your-namespace.com
+// @version      0.1
+// @description  Fetch and log token from a URL
+// @author       You
+// @match        https://www.hetushu.com/book/5763/4327497.html
+// @grant        none
+// ==/UserScript==
+
 function rm(selector, all = false, dom) {
     if (all) {
       const rs = dom.querySelectorAll(selector);
@@ -784,9 +794,10 @@ async function getHtmlDOM(input, charset, init, test = (response) => Promise.res
 
 
 async function sortPage() {
-    const doc = await getHtmlDOM('https://www.hetushu.com/book/5763/4327467.html', 'utf-8');
+    const doc = await getHtmlDOM('https://www.hetushu.com/book/5763/4327497.html', 'utf-8');
+    console.log('Origin :', doc);
     try {
-        const response = await fetch('https://www.hetushu.com/book/5763/r4327467.json', {
+        const response = await fetch('https://www.hetushu.com/book/5763/r4327497.json', {
             headers: {
                 accept: "*/*",
                 "cache-control": "no-cache",
@@ -838,7 +849,9 @@ async function sortPage() {
                     }
                     thisBody.appendChild(childNode);
                 }
-            console.log(thisBody);
+            let content = thisBody.innerText
+            console.log('this body 2', thisBody);
+            console.log('content', content);
         } else {
             console.log('Token is null');
         }
@@ -857,7 +870,6 @@ async function sortPage() {
             oldNode.parentNode?.replaceChild(newNode, oldNode);
         });
         const { dom, text, images } = await cleanDOM(content, "TM");
-        console.log(text);
         return {
             contentText: text,
             };
@@ -867,5 +879,5 @@ async function sortPage() {
                 contentText: null,
             };
         }
-    } 
+    }
 sortPage();
