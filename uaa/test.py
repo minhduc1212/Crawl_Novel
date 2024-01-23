@@ -5,8 +5,8 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
                     'AppleWebKit/537.36 (KHTML, like Gecko) '
                     'Chrome/80.0.3987.149 Safari/537.36',
-    'Referer': 'https://www.uaa.com/novel/chapter?id=867248238330253313',
-    'Token': 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6OTQwNjAyOTIzOTcxMzgzMjk2LCJ0eXBlIjoiY3VzdG9tZXIiLCJ0aW1lc3RhbXAiOjE3MDQ5Mzk3NzY4MzEsImV4cCI6MTcwNTU0NDU3Nn0.njZskdJVRINsxBoYdcYBeEHPr3uabziB8NCqtR7Qag4'
+    #'Referer': 'https://www.uaa.com/novel/chapter?id=867248238330253313',
+    'Token': 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6OTQwNjAyOTIzOTcxMzgzMjk2LCJ0eXBlIjoiY3VzdG9tZXIiLCJ0aW1lc3RhbXAiOjE3MDU3MTk0MDUzNzksImV4cCI6MTcwNjMyNDIwNX0.vYhyZOj85Qc-awQesALUoCuCRls93--5-_p1eMmZ0PM'
 }
 
 cookies = {
@@ -17,5 +17,5 @@ cookies = {
 }
 response = requests.get(url, headers=headers, cookies=cookies)
 print(response.status_code)
-with open('test1.json', 'w', encoding='utf-8') as f:
+with open('test.json', 'w', encoding='utf-8') as f:
     f.write(response.text)

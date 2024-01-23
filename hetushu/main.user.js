@@ -796,7 +796,7 @@ async function getHtmlDOM(input, charset, init, test = (response) => Promise.res
 async function sortPage() {
     const doc = await getHtmlDOM('https://www.hetushu.com/book/5763/4327497.html', 'utf-8');
     console.log('Origin :', doc);
-    try {
+    try {   
         const response = await fetch('https://www.hetushu.com/book/5763/r4327497.json', {
             headers: {
                 accept: "*/*",
@@ -821,7 +821,6 @@ async function sortPage() {
             console.log('Token Dictionary:', tokenDict);
             const thisBody = doc.querySelector("#content");
             rm(".mask.mask2", false, thisBody);
-            console.log(thisBody);
             let b = 0;
             let star = 0;
             for (let i = 0; i < thisBody.childNodes.length; i++) {

@@ -1,10 +1,15 @@
-from fake_useragent import UserAgent
 from time import sleep
 from seleniumwire import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
-driver = webdriver.Chrome()
+options = Options()
+options.add_argument('--headless')
+options.add_argument('--disable-gpu')
+options.add_argument('--no-sandbox')
+options.add_argument('--disable-dev-shm-usage')
+
+driver = webdriver.Chrome(options=options)
 driver.get('https://www.uaa.com/novel/chapter?id=448908')
 sleep(5)
 enough_age = driver.find_element(By.XPATH, '/html/body/div/div[4]/div/div/dl[6]/a')
