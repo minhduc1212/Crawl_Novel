@@ -1,9 +1,10 @@
 import cloudscraper
 from bs4 import BeautifulSoup
+import requests
 
 scraper = cloudscraper.create_scraper()
 url ='https://www.piaotia.com/html/14/14014/10830837.html'
-response = scraper.get(url)
+response = requests.get(url)
 response.encoding = 'gb18030'
 soup = BeautifulSoup(response.text, 'html.parser')
 #Delete the useless tags
