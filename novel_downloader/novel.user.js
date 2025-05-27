@@ -228,6 +228,7 @@
 // @match          *://www.alphapolis.co.jp/novel/*/*
 // @match          *://novelup.plus/story/*
 // @match          *://www.69shu.com/txt/*.htm
+// @match          *://www.69xinshu.com/book/*.htm
 // @match          *://www.69shuba.com/book/*.htm
 // @match          *://new-read.readmoo.com/mooreader/*
 // @match          *://www.iqingguo.com/book/detail/?id=*
@@ -35890,7 +35891,7 @@ var REGEXPS = {
               break;
           }
           case "www.69shuba.com":
-          case "www.69shu.com": {
+          case "www.69xinshu.com": {
               const { c69shu } = await Promise.resolve(/* import() */).then(__webpack_require__.bind(__webpack_require__, "./src/rules/twoPage/69shu.ts"));
               ruleClass = c69shu();
               break;
