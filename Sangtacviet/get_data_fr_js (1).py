@@ -4,7 +4,7 @@ import re
 import os
 
 response = []
-with open('combined_responses_1.txt', 'r', encoding='utf-8') as f:
+with open('combined_responses.txt', 'r', encoding='utf-8') as f:
     data = f.read()
     #đọc từng dòng trong file rồi đưa vào response
     for index, line in enumerate(data.split('\n')):
