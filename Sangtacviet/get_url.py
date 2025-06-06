@@ -23,7 +23,7 @@ with open("url.json", "r", encoding="utf-8") as f:
     else:
         print("Không tìm thấy đoạn văn bản phù hợp.")
 for id in ids:
-    url = f"https://sangtacviet.vip/truyen/fanqie/1/7303349871199652883/{id}/"
+    url = f"https://sangtacviet.vip/truyen/fanqie/1/7441048283864108094/{id}/"
     new_urls.append(url)
 with open("new_url.json", "w", encoding="utf-8") as f:
     json.dump(new_urls, f, ensure_ascii=False, indent=4)
