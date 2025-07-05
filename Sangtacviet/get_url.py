@@ -9,21 +9,18 @@ with open("url.json", "w", encoding="utf-8") as f:
     json.dump(data, f, ensure_ascii=False, indent=4)
 with open("url.json", "r", encoding="utf-8") as f:
     data = json.load(f)
-    urls= data['data']
 
-    urls = str(urls)
-    urls = urls.replace("-", "")
+oridata= data['oridata']
 
-    pattern = r"/(.*?)/"
-    matches = re.findall(pattern, urls)
-    if matches:
-        for match in matches:
-            if match != '':
-                ids.append(match)
-    else:
-        print("Không tìm thấy đoạn văn bản phù hợp.")
+str = str(oridata)
+str_s = str.split("-/-")
+for s in str_s:
+    match = re.search(r"\b\d{2,}\b", s)
+    if match:
+        ids.append(match.group(0))
+
 for id in ids:
-    url = f"https://sangtacviet.vip/truyen/fanqie/1/7441048283864108094/{id}/"
+    url = f"https://sangtacviet.vip/truyen/fanqie/1/7413755848888945726/{id}/"
     new_urls.append(url)
 with open("new_url.json", "w", encoding="utf-8") as f:
     json.dump(new_urls, f, ensure_ascii=False, indent=4)

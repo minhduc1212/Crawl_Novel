@@ -1,1 +1,9 @@
 yousuu/yousuu.sqlite
+Sangtacviet/combined_responses.txt
+Sangtacviet/failed_urls.txt
+Sangtacviet/main.ipynb
+Sangtacviet/combined_responses (1).txt
+*.log
+*.tmp
+
+__pycache__/
